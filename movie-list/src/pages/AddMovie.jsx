@@ -46,6 +46,7 @@ const AddMovie = () => {
             localStorage.setItem("movies", JSON.stringify([newMovie, ...storedMovies]));
 
             setMessage("Successfully created a movie");
+            setTimeout(() => {setMessage("")}, 2000)
             setTitle('');
             setImage(null);
             setYear('');
