@@ -15,36 +15,49 @@ const AddMovie = () => {
     console.log(storedMovies)
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        if (!title || !year || !rating) {
-          alert("Please fill all required fields!");
-          return;
-        }
+      if (!title || !year || !rating) {
+        alert("Please fill all required fields!");
+        return;
+      }
 
-        try{
+      if (!image) {
+        alert("Please upload an image!");
+        return;
+      }
+
+      try {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64Image = reader.result;
+
             const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
-            console.log(storedMovies)
 
             const newMovie = {
-                id: Date.now(),
-                title: title,
-                image: image ? URL.createObjectURL(image) : null ,
-                year: parseInt(year),
-                rating: parseFloat(rating),
+              id: Date.now(),
+              title,
+              image: base64Image,
+              year: parseInt(year),
+              rating: parseFloat(rating),
             };
 
             localStorage.setItem("movies", JSON.stringify([newMovie, ...storedMovies]));
-            setMessage("Successfully created a blog");
-            setTitle('')
+
+            setMessage("Successfully created a movie");
+            setTitle('');
             setImage(null);
             setYear('');
             setRating('');
-        }
-        catch(error){
-          console.error('Failed to save movie: ', error)
-          setMessage("Failed to create a blog");
-        }
+        };
+
+        reader.readAsDataURL(image);
+      } 
+      catch (error) {
+        console.error("Failed to save movie: ", error);
+        setMessage("Failed to create a movie");
+      }
     };
 
     return (

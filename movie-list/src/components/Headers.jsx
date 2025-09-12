@@ -6,7 +6,7 @@ const Headers = () => {
         <header>
             <nav className='relative z-10 flex justify-between items-center px-8 py-6'>
                 <div className='flex space-x-12 mt-5'>
-                    <a href="#" className="text-red-400 font-medium text-lg">Home</a>
+                    <a href="#" className="text-red-400 font-bold text-lg">Home</a>
                     <Link to="add_movie/" className="text-red-400 font-medium text-lg hover:underline">Add Movies</Link>
                 </div>
 
