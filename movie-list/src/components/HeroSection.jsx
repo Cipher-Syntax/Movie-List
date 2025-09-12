@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 
 const HeroSection = ({searchQuery, setSearchQuery}) => {
@@ -12,7 +11,7 @@ const HeroSection = ({searchQuery, setSearchQuery}) => {
                 <span className='bg-gradient-to-r from-white to-pink-400 bg-clip-text text-transparent'>Spectrum Lab</span>
             </div>
 
-            <p className='text-gray-400 text-lg max-w-3xl mx-auto mb-12 leading-relaxed'>
+            <p className='text-gray-400 text-lg max-w-3xl mx-auto mb-12 leading-relaxed mt-2'>
                 Spectrum Lab is more than a watchlist—it's your personal hub for discovering, organizing,<br />
                 and celebrating cinema. Track what you've seen, explore curated picks,<br />
                 and find stories that match your mood.

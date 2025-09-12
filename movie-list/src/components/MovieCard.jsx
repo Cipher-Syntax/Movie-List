@@ -6,7 +6,7 @@ const MovieCard = ({ id, title, image, year, rating, onDelete }) => {
         <div className="w-80 h-96 relative rounded-lg overflow-hidden hover:translate-y-[-10px] ease-in-out duration-[0.5s]" id='movies'>
             <div className="absolute inset-0">
                 {image ? (
-                    <img src={image} alt={title} className="w-full h-full object-cover" 
+                    <img src={image} alt={title} className="w-full h-full object-cover object-top" 
                     />
                 ) : (
                 <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-400">No Image</div>

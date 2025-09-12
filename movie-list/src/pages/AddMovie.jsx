@@ -66,7 +66,7 @@ const AddMovie = () => {
           {/* Back Button */}
             <button
               onClick={() => navigate("/")}
-              className="flex items-center text-red-400 mb-4"
+              className="flex items-center text-red-400 mb-4 cursor-pointer"
             >
               <IoIosArrowRoundBack size={30} /> Back
             </button>
