@@ -3,7 +3,7 @@ import React from 'react';
 const MovieCard = ({ id, title, image, year, rating, onDelete }) => {
 
     return (
-        <div className="w-80 h-96 relative rounded-lg overflow-hidden hover:translate-y-[-10px] ease-in-out duration-[0.5s]" id='movies'>
+        <div className="w-80 h-96 relative rounded-lg overflow-hidden hover:translate-y-[-10px] ease-in-out duration-[0.5s] cursor-pointer" id='movies'>
             <div className="absolute inset-0">
                 {image ? (
                     <img src={image} alt={title} className="w-full h-full object-cover object-top" 
@@ -21,7 +21,7 @@ const MovieCard = ({ id, title, image, year, rating, onDelete }) => {
                 <span>⭐ {rating}</span>
                 </div>
 
-                <button onClick={() => onDelete(id)} className="mt-3 text-xs bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white">Delete</button>
+                <button onClick={() => onDelete(id)} className="mt-3 text-xs bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white cursor-pointer">Delete</button>
             </div>
         </div>
     );
