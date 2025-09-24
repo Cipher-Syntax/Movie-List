@@ -5,6 +5,7 @@ import { MovieCard } from '../components';
 const Home = () => {
     const [movies, setMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [filteredGenre, setFilteredGenre] = useState('All')
 
     // Load movies
     useEffect(() => {
@@ -25,15 +26,29 @@ const Home = () => {
         localStorage.setItem("movies", JSON.stringify(updatedMovies));
     };
 
+    const genresToFilter = ['All', ...new Set(movies.map(movie => movie.genres || []).flat())] 
+
     // Filter movies
-    const filteredMovies = movies.filter((movie) =>
-        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredMovies = movies.filter((movie) => {
+        const movieFiltered = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const genreFiltered = filteredGenre === "All" || (movie.genres && movie.genres.includes(filteredGenre));
+
+        return movieFiltered && genreFiltered;
+    
+    });
 
     return (
         <div className='min-h-screen bg-black text-white relative overflow-hidden'>
             <Headers />
             <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+            <div className="flex justify-start my-6 px-30">
+                <select value={filteredGenre} onChange={(e) => setFilteredGenre(e.target.value)} className="px-4 py-2 bg-gray-800 text-white rounded-md w-[200px]">
+                    {genresToFilter.map((genre, index) => (
+                        <option key={index} value={genre}>{genre}</option>
+                    ))}
+                </select>
+            </div>
 
             {filteredMovies.length === 0 ? (
                 <p className='text-center my-10'>No Movies found</p>
@@ -44,6 +59,8 @@ const Home = () => {
                             key={movie.id}
                             id={movie.id}
                             title={movie.title}
+                            description={movie.description}
+                            genres={movie.genres}
                             image={movie.image}
                             year={movie.year}
                             rating={movie.rating}
