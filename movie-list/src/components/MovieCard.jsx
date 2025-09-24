@@ -29,7 +29,7 @@ const MovieCard = ({ id, title, image, description, genres, year, rating, onDele
                     <span>⭐ {rating}</span>
                 </div>
 
-                <button onClick={() => onDelete(id)} className="mt-3 text-xs bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white cursor-pointer">Delete</button>
+                <button onClick={() => onDelete(id)} className="mt-3 text-[12px] bg-red-500 hover:bg-red-600 px-3 py-3 tracking-widest font-bold rounded text-white cursor-pointer w-full">Delete</button>
             </div>
         </div>
     );
