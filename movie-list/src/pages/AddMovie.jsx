@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { useNavigate } from 'react-router-dom'
 
 const AddMovie = () => {
     const [title, setTitle] = useState("");
@@ -10,63 +9,59 @@ const AddMovie = () => {
     const [year, setYear] = useState("");
     const [rating, setRating] = useState("");
     const [message, setMessage] = useState('');
-    const navigate = useNavigate();
 
     const genreOptions = ['Adventure', 'Action', 'Comedy', 'Drama', 'Horror', 'Romance', 'Mystery', 'Thriller']
 
-    const handleCheckboxChange = (genre) => {
-        setGenres((prev) => prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
-        );
+    const handleGenre = (genre) => {
+        setGenres((prev) => prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (!title || !description || !year || !rating) {
-        alert("Please fill all required fields!");
-        return;
+            alert("Please fill all required fields!");
+            return;
         }
 
         if (!image) {
-        alert("Please upload an image!");
-        return;
+            alert("Please upload an image!");
+            return;
         }
 
         try {
-        const reader = new FileReader();
+            const reader = new FileReader();
 
-        reader.onload = () => {
-            const base64Image = reader.result;
+            reader.onload = () => {
+                const base64Image = reader.result;
+                const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
 
-            const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
+                const newMovie = {
+                    id: Date.now(),
+                    title,
+                    description,
+                    genres,
+                    image: base64Image,
+                    year: parseInt(year),
+                    rating: parseFloat(rating),
+                };
 
-            const newMovie = {
-            id: Date.now(),
-            title,
-            description,
-            genres,
-            image: base64Image,
-            year: parseInt(year),
-            rating: parseFloat(rating),
+                localStorage.setItem("movies", JSON.stringify([newMovie, ...storedMovies]));
+                setMessage("Successfully created a movie");
+                setTimeout(() => { setMessage("") }, 2000)
+                setTitle('');
+                setDescription('');
+                setGenres([]);
+                setImage(null);
+                setYear('');
+                setRating('');
             };
 
-            localStorage.setItem("movies", JSON.stringify([newMovie, ...storedMovies]));
-
-            setMessage("Successfully created a movie");
-            setTimeout(() => { setMessage("") }, 2000)
-            setTitle('');
-            setDescription('');
-            setGenres([]);
-            setImage(null);
-            setYear('');
-            setRating('');
-        };
-
-        reader.readAsDataURL(image);
+            reader.readAsDataURL(image);
         }
         catch (error) {
-        console.error("Failed to save movie: ", error);
-        setMessage("Failed to create a movie");
+            console.error("Failed to save movie: ", error);
+            setMessage("Failed to create a movie");
         }
     };
 
@@ -99,21 +94,18 @@ const AddMovie = () => {
                 <div className="flex flex-col gap-2">
                     <p className="font-semibold">Select Genre(s):</p>
                     <div className="flex flex-wrap gap-4">
-                        {genreOptions.map((genre) => (
-                        <label key={genre} className="flex items-center gap-2">
-                            <input
-                            type="checkbox"
-                            checked={genres.includes(genre)}
-                            onChange={() => handleCheckboxChange(genre)}
-                            />
-                            {genre}
-                        </label>
-                        ))}
+                        {
+                            genreOptions.map((genre) => (
+                                <label key={genre} className="flex items-center gap-2">
+                                    <input type="checkbox" checked={genres.includes(genre)} onChange={() => handleGenre(genre)}/>
+                                    {genre}
+                                </label>
+                            ))
+                        }
                     </div>
                 </div>
 
-                <div onClick={() => document.getElementById("fileInput").click()} className="w-full h-[200px] border-2 border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer"
-                >
+                <div onClick={() => document.getElementById("fileInput").click()} className="w-full h-[200px] border-2 border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer">
                     <span>{image ? image.name : "Drag & Drop or Click to Upload"}</span>
                     <input
                         id="fileInput"
